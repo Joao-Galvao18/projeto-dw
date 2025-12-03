@@ -1,0 +1,16 @@
+{
+  "name": "projeto-dw",
+  "version": "1.0.0",
+  "description": "Project for Web Development 2025",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "Group Project",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^39.2.4",
+    "mongodb": "^7.0.0"
+  }
+}
