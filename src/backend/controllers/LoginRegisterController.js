@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { getDatabase } = require('./database');
+const { getDatabase } = require('../database');
 
 //PASSWORD ENCRIPTOR
 function encryptPassword(passwordToEncrypt) {

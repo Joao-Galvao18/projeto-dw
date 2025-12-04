@@ -3,7 +3,8 @@ const fileSystem = require('fs');
 const path = require('path');
 
 const { connectToDatabase } = require('./database');
-const { registerUser, loginUser } = require('./controllers');
+
+const { registerUser, loginUser } = require('./controllers/LoginRegisterController');
 
 const SERVER_PORT = 8000;
 const FRONTEND_DIRECTORY_PATH = path.join(__dirname, '../frontend');
