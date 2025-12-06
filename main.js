@@ -13,14 +13,22 @@ function createMainWindow() {
             symbolColor: '#333333',
             height: 40,
         },
-
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true
         }
     });
 
-    mainWindow.loadURL('http://localhost:8000');
+    const url = 'http://localhost:8000';
+
+    const loadContent = () => {
+        mainWindow.loadURL(url).catch((err) => {
+            console.log(`Server not ready. Retrying...`);
+            setTimeout(loadContent, 1000); 
+        });
+    };
+
+    loadContent();
 }
 
 app.whenReady().then(createMainWindow);
