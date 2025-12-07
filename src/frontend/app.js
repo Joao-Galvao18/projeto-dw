@@ -123,12 +123,7 @@ function App() {
         }
 
         if (currentScreen === 'dashboard') {
-            return (
-                <div className="dashboard-padding">
-                    <h1>My Board</h1>
-                    <p style={{color: '#666'}}>Welcome back, {currentUser.name}.</p>
-                </div>
-            );
+            return <BoardScreen currentUser={currentUser} />;
         }
     }
 
