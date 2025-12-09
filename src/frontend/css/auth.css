@@ -1,0 +1,20 @@
+.login-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40px;
+}
+
+.auth-card { width: 360px; text-align: center; }
+
+.logo-center {
+    width: 48px; height: 48px; background-color: #5B42F3; border-radius: 12px;
+    margin: 0 auto 24px auto; display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 24px;
+}
+
+.auth-card h2 { font-size: 24px; font-weight: 600; margin: 0 0 8px 0; color: #111; }
+.auth-card p { font-size: 14px; color: #6B7280; margin: 0 0 32px 0; }
+
+.link-text { margin-top: 24px; font-size: 13px; color: #5B42F3; cursor: pointer; }

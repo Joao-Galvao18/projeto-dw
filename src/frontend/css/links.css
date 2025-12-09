@@ -1,0 +1,50 @@
+.links-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;
+}
+
+.link-card {
+    background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.link-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+
+.link-card-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
+
+.link-icon {
+    width: 40px; height: 40px; background: #EFF6FF; color: #3B82F6;
+    border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px;
+}
+
+.link-delete-btn { color: #9CA3AF; cursor: pointer; font-size: 18px; }
+.link-delete-btn:hover { color: #EF4444; }
+
+.link-card h3 { margin: 0 0 5px 0; font-size: 16px; color: #111; }
+
+.link-url {
+    margin: 0 0 20px 0; font-size: 13px; color: #6B7280;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.link-action {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #5B42F3; font-size: 13px; font-weight: 500; text-decoration: none;
+}
+.link-action:hover { text-decoration: underline; }
+
+.filter-section {
+    display: flex; gap: 10px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 5px;
+}
+
+.filter-pill {
+    border: 1px solid #E5E7EB; background-color: #ffffff; padding: 8px 16px;
+    border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 500;
+    color: #6B7280; transition: all 0.2s ease;
+}
+.filter-pill:hover { background-color: #F9FAFB; border-color: #D1D5DB; }
+
+.filter-pill.active {
+    background-color: #F5F3FF;
+    border-color: #5B42F3;
+    color: #5B42F3;
+    font-weight: 600;
+}
