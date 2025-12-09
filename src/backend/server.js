@@ -5,6 +5,7 @@ const path = require('path');
 const { connectToDatabase } = require('./database');
 
 const { registerUser, loginUser } = require('./controllers/LoginRegisterController');
+const { getLinks, createLink, deleteLink } = require('./controllers/LinkController.js');
 
 const { 
     getBoards, 
@@ -148,6 +149,33 @@ const server = http.createServer(async (incomingRequest, serverResponse) => {
             const noteIdToDelete = incomingRequest.url.split('/').pop();
             const result = await deleteNote(noteIdToDelete);
             
+            serverResponse.writeHead(200);
+            serverResponse.end(JSON.stringify(result));
+            return;
+        }
+
+//GET LINKS
+        if (incomingRequest.url === '/api/links' && incomingRequest.method === 'GET') {
+            const userEmail = incomingRequest.headers['user-email'];
+            const result = await getLinks(userEmail);
+            serverResponse.writeHead(200);
+            serverResponse.end(JSON.stringify(result));
+            return;
+        }
+
+//CREATE LINK
+        if (incomingRequest.url === '/api/links' && incomingRequest.method === 'POST') {
+            const linkData = await getRequestData(incomingRequest);
+            const result = await createLink(linkData);
+            serverResponse.writeHead(result.success ? 201 : 400);
+            serverResponse.end(JSON.stringify(result));
+            return;
+        }
+
+//DELETE LINK
+        if (incomingRequest.url.startsWith('/api/links/') && incomingRequest.method === 'DELETE') {
+            const linkId = incomingRequest.url.split('/').pop();
+            const result = await deleteLink(linkId);
             serverResponse.writeHead(200);
             serverResponse.end(JSON.stringify(result));
             return;
