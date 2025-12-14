@@ -54,6 +54,7 @@ function App() {
         if (currentScreen === 'register') return 'Create Account';
         if (currentScreen === 'dashboard') return 'My Board';
         if (currentScreen === 'links') return 'Links';
+        if (currentScreen === 'todo') return 'To-Do';
         return 'Organizer';
     }
 
@@ -75,7 +76,10 @@ function App() {
                         <i className="ph ph-squares-four"></i><span>Board</span>
                     </div>
 
-                    <div className="nav-item"><i className="ph ph-check-square-offset"></i><span>To-Do</span></div>
+                    <div className={`nav-item ${currentScreen === 'todo' ? 'active' : ''}`}
+                         onClick={() => currentUser && setCurrentScreen('todo')}>
+                        <i className="ph ph-check-square-offset"></i><span>To-Do</span>
+                    </div>
 
                     <div className={`nav-item ${currentScreen === 'links' ? 'active' : ''}`} onClick={() => currentUser && setCurrentScreen('links')}>
                         <i className="ph ph-link"></i><span>Links</span>
@@ -135,6 +139,10 @@ function App() {
 
         if (currentScreen === 'links') {
             return <LinkScreen currentUser={currentUser} />;
+        }
+        
+        if (currentScreen === 'todo') {
+            return <ToDoScreen currentUser={currentUser} />;
         }
         
     }
