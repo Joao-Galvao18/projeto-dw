@@ -17,6 +17,8 @@ const {
     deleteNote 
 } = require('./controllers/BoardController');
 
+const { getTasks, createTask, toggleTask, reorderTasks, deleteTask } = require('./controllers/ToDoController');
+
 const SERVER_PORT = 8000;
 const FRONTEND_DIRECTORY_PATH = path.join(__dirname, '../frontend');
 
@@ -176,6 +178,52 @@ const server = http.createServer(async (incomingRequest, serverResponse) => {
         if (incomingRequest.url.startsWith('/api/links/') && incomingRequest.method === 'DELETE') {
             const linkId = incomingRequest.url.split('/').pop();
             const result = await deleteLink(linkId);
+            serverResponse.writeHead(200);
+            serverResponse.end(JSON.stringify(result));
+            return;
+        }
+        
+//GET TASKS
+        if (incomingRequest.url === '/api/todos' && incomingRequest.method === 'GET') {
+            const userEmail = incomingRequest.headers['user-email'];
+            const result = await getTasks(userEmail);
+            serverResponse.writeHead(200);
+            serverResponse.end(JSON.stringify(result));
+            return;
+        }
+
+//CREATE TASK
+        if (incomingRequest.url === '/api/todos' && incomingRequest.method === 'POST') {
+            const taskData = await getRequestData(incomingRequest);
+            const result = await createTask(taskData);
+            serverResponse.writeHead(200);
+            serverResponse.end(JSON.stringify(result));
+            return;
+        }
+
+//TOGGLE TASK
+        if (incomingRequest.url.startsWith('/api/todos/') && incomingRequest.method === 'PUT') {
+            const taskId = incomingRequest.url.split('/').pop();
+            const updateData = await getRequestData(incomingRequest);
+            const result = await toggleTask(taskId, updateData.isCompleted);
+            serverResponse.writeHead(200);
+            serverResponse.end(JSON.stringify(result));
+            return;
+        }
+
+//REORDER TASKS
+        if (incomingRequest.url === '/api/todos/reorder' && incomingRequest.method === 'PUT') {
+            const { taskIds } = await getRequestData(incomingRequest);
+            const result = await reorderTasks(taskIds);
+            serverResponse.writeHead(200);
+            serverResponse.end(JSON.stringify(result));
+            return;
+        }
+
+//DELETE TASK
+        if (incomingRequest.url.startsWith('/api/todos/') && incomingRequest.method === 'DELETE') {
+            const taskId = incomingRequest.url.split('/').pop();
+            const result = await deleteTask(taskId);
             serverResponse.writeHead(200);
             serverResponse.end(JSON.stringify(result));
             return;
