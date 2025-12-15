@@ -6,6 +6,8 @@ function BoardScreen({ currentUser }) {
     const [activeBoard, setActiveBoard] = useState(null);
     const [boardNotes, setBoardNotes] = useState([]);
     
+    const [showBoardMenu, setShowBoardMenu] = useState(false);
+
     const [isCreatingBoard, setIsCreatingBoard] = useState(false);
     const [newBoardName, setNewBoardName] = useState('');
     
@@ -275,36 +277,49 @@ function BoardScreen({ currentUser }) {
     return (
         <div className="content-area">
             <div className="board-header">
-                <div className="tabs-container">
-                    {userBoardsList.map(board => (
-                        <div 
-                            key={board._id} 
-                            className={`board-tab ${activeBoard && activeBoard._id === board._id ? 'active' : ''}`} 
-                            onClick={() => setActiveBoard(board)}
-                        >
-                            {board.name}
-                            <span 
-                                className="tab-delete-btn" 
-                                onClick={(e) => handleDeleteBoard(e, board._id)}
-                            >
-                                <i className="ph-bold ph-x"></i>
-                            </span>
+                
+                <div className="board-header-left">
+                    <div className="board-dropdown-wrapper">
+                        <div className="current-board-btn" onClick={() => setShowBoardMenu(!showBoardMenu)}>
+                            <span>{activeBoard ? activeBoard.name : 'Select Board'}</span>
+                            <i className="ph-bold ph-caret-down"></i>
                         </div>
-                    ))}
-                    
-                    {isCreatingBoard ? (
-                        <div className="new-tab-input">
+
+                        {showBoardMenu && (
+                            <div className="board-dropdown-menu">
+                                {userBoardsList.map(board => (
+                                    <div 
+                                        key={board._id} 
+                                        className="dropdown-item"
+                                        onClick={() => { setActiveBoard(board); setShowBoardMenu(false); }}
+                                    >
+                                        <span style={{flex:1}}>{board.name}</span>
+                                        <span 
+                                            className="dropdown-delete" 
+                                            onClick={(e) => handleDeleteBoard(e, board._id)}
+                                        >
+                                            <i className="ph ph-trash"></i>
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="create-board-wrapper">
+                        {isCreatingBoard ? (
                             <input 
+                                className="new-board-input"
                                 autoFocus 
                                 placeholder="Name..." 
                                 value={newBoardName} 
                                 onChange={e => setNewBoardName(e.target.value)} 
                                 onKeyDown={e => e.key === 'Enter' && handleCreateNewBoard()} 
                             />
-                        </div>
-                    ) : (
-                        <button className="new-tab-btn" onClick={() => setIsCreatingBoard(true)}>+</button>
-                    )}
+                        ) : (
+                            <button className="new-board-btn" onClick={() => setIsCreatingBoard(true)}>+</button>
+                        )}
+                    </div>
                 </div>
 
                 <div className="board-tools">
