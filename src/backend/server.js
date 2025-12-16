@@ -18,6 +18,7 @@ const {
 } = require('./controllers/BoardController');
 
 const { getTasks, createTask, toggleTask, reorderTasks, deleteTask } = require('./controllers/ToDoController');
+const { updateUserTheme } = require('./controllers/SettingsController');
 
 const SERVER_PORT = 8000;
 const FRONTEND_DIRECTORY_PATH = path.join(__dirname, '../frontend');
@@ -224,6 +225,15 @@ const server = http.createServer(async (incomingRequest, serverResponse) => {
         if (incomingRequest.url.startsWith('/api/todos/') && incomingRequest.method === 'DELETE') {
             const taskId = incomingRequest.url.split('/').pop();
             const result = await deleteTask(taskId);
+            serverResponse.writeHead(200);
+            serverResponse.end(JSON.stringify(result));
+            return;
+        }
+        
+//SETTINGS ROUTES
+        if (incomingRequest.url === '/api/settings/theme' && incomingRequest.method === 'PUT') {
+            const { userEmail, theme } = await getRequestData(incomingRequest);
+            const result = await updateUserTheme(userEmail, theme);
             serverResponse.writeHead(200);
             serverResponse.end(JSON.stringify(result));
             return;
