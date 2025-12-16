@@ -51,7 +51,7 @@
     display: flex; align-items: center; justify-content: center; transition: all 0.2s;
 }
 .custom-checkbox.checked {
-    background: #000; border-color: #000; color: white; font-size: 12px;
+    background: #5B42F3; border-color: #5B42F3; color: white; font-size: 12px;
 }
 
 .task-text { flex: 1; font-size: 14px; color: #111; }
