@@ -1,4 +1,4 @@
-const { useState } = React;
+const { useState, useEffect } = React;
 
 function App() {
 
@@ -8,6 +8,13 @@ function App() {
     const [userName, setUserName] = useState('');
     const [statusMessage, setStatusMessage] = useState('');
     const [currentUser, setCurrentUser] = useState(null);
+    
+// THEME STATE
+    const [theme, setTheme] = useState('light');
+
+    useEffect(() => {
+        document.body.setAttribute('data-theme', theme);
+    }, [theme]);
 
     async function handleLogin() {
         setStatusMessage('');
@@ -20,7 +27,11 @@ function App() {
             const result = await response.json();
             if (result.success) {
                 setCurrentUser(result.user);
+
+                // LOAD USER THEME PREFERENCE
+                setTheme(result.user.theme || 'light');
                 setCurrentScreen('dashboard');
+
             } else { setStatusMessage(result.message); }
         } catch (error) { setStatusMessage('Server error'); }
     }
@@ -47,6 +58,7 @@ function App() {
         setCurrentScreen('login');
         setEmail('');
         setPassword('');
+        setTheme('light');
     }
 
     function getPageTitle() {
@@ -55,6 +67,7 @@ function App() {
         if (currentScreen === 'dashboard') return 'My Board';
         if (currentScreen === 'links') return 'Links';
         if (currentScreen === 'todo') return 'To-Do';
+        if (currentScreen === 'settings') return 'Settings';
         return 'Organizer';
     }
 
@@ -86,7 +99,10 @@ function App() {
                     </div>
                     
                     <div className="nav-spacer"></div>
-                    <div className="nav-item"><i className="ph ph-gear"></i><span>Settings</span></div>
+                    
+                    <div className={`nav-item ${currentScreen === 'settings' ? 'active' : ''}`} onClick={() => currentUser && setCurrentScreen('settings')}>
+                        <i className="ph ph-gear"></i><span>Settings</span>
+                    </div>
 
                     {currentUser ? (
                         <div className="nav-item nav-logout" onClick={handleLogout}>
@@ -143,6 +159,16 @@ function App() {
         
         if (currentScreen === 'todo') {
             return <ToDoScreen currentUser={currentUser} />;
+        }
+
+        if (currentScreen === 'settings') {
+            return (
+                <SettingsScreen 
+                    currentUser={currentUser} 
+                    currentTheme={theme} 
+                    onThemeChange={setTheme} 
+                />
+            );
         }
         
     }
