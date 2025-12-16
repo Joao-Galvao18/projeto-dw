@@ -11,6 +11,10 @@ function BoardScreen({ currentUser }) {
     const [isCreatingBoard, setIsCreatingBoard] = useState(false);
     const [newBoardName, setNewBoardName] = useState('');
     
+    // DELETE POPUP STATE
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [boardToDelete, setBoardToDelete] = useState(null);
+
     // VIEWPORT STATE (ZOOM AND PAN)
     const [viewportState, setViewportState] = useState({ 
         xPosition: 0, 
@@ -66,21 +70,31 @@ function BoardScreen({ currentUser }) {
         setIsCreatingBoard(false);
     };
 
-    const handleDeleteBoard = async (event, boardIdToDelete) => {
+    // REQUEST TO DELETE BOARD
+    const handleDeleteBoardRequest = (event, boardIdToDelete) => {
         event.stopPropagation(); // Prevent tab switching when clicking the delete icon
-        
-        if (!confirm('Are you sure you want to delete this board?')) return;
+        setBoardToDelete(boardIdToDelete);
+        setIsDeleteModalOpen(true);
+        setShowBoardMenu(false);
+    };
 
-        await fetch(`/api/boards/${boardIdToDelete}`, { method: 'DELETE' });
+    // CONFIRM DELETION
+    const confirmDeleteBoard = async () => {
+        if (!boardToDelete) return;
 
-        const remainingBoards = userBoardsList.filter(board => board._id !== boardIdToDelete);
+        await fetch(`/api/boards/${boardToDelete}`, { method: 'DELETE' });
+
+        const remainingBoards = userBoardsList.filter(board => board._id !== boardToDelete);
         setUserBoardsList(remainingBoards);
 
         // If we deleted the currently active board, switch to another one
-        if (activeBoard && activeBoard._id === boardIdToDelete) {
+        if (activeBoard && activeBoard._id === boardToDelete) {
             setActiveBoard(remainingBoards.length > 0 ? remainingBoards[0] : null);
             setBoardNotes([]); // Clear notes
         }
+
+        setIsDeleteModalOpen(false);
+        setBoardToDelete(null);
     };
 
     // NOTE API ACTIONS
@@ -296,7 +310,7 @@ function BoardScreen({ currentUser }) {
                                         <span style={{flex:1}}>{board.name}</span>
                                         <span 
                                             className="dropdown-delete" 
-                                            onClick={(e) => handleDeleteBoard(e, board._id)}
+                                            onClick={(e) => handleDeleteBoardRequest(e, board._id)}
                                         >
                                             <i className="ph ph-trash"></i>
                                         </span>
@@ -430,6 +444,30 @@ function BoardScreen({ currentUser }) {
                     )}
                 </div>
             </div>
+
+            {/*DELETE CONFIRMATION POP UP*/}
+            {isDeleteModalOpen && (
+                <div className="modal-overlay">
+                    <div className="modal-content" style={{width: '320px'}}>
+                        <div className="modal-danger-header">
+                            <div className="danger-icon-circle">
+                                <i className="ph-bold ph-warning"></i>
+                            </div>
+                            <h3>Delete Board?</h3>
+                        </div>
+                        
+                        <p style={{color:'#666', fontSize:'14px', margin:0}}>
+                            Are you sure you want to delete this board? 
+                            <br/><strong>All sticky notes inside it will be lost.</strong>
+                        </p>
+
+                        <div className="modal-actions">
+                            <button className="btn-secondary" onClick={() => setIsDeleteModalOpen(false)}>Cancel</button>
+                            <button className="btn-danger" onClick={confirmDeleteBoard}>Delete Board</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
