@@ -1,0 +1,20 @@
+[{
+  "_id": {
+    "$oid": "6942ddba492737421858b0e8"
+  },
+  "userEmail": "testuser@gmail.com",
+  "name": "My Board",
+  "createdAt": {
+    "$date": "2025-12-17T16:43:38.655Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69445275492737421858b0ea"
+  },
+  "userEmail": "testuser@gmail.com",
+  "name": "Test Board",
+  "createdAt": {
+    "$date": "2025-12-18T19:13:57.473Z"
+  }
+}]

@@ -1,0 +1,34 @@
+[{
+  "_id": {
+    "$oid": "69445277492737421858b0eb"
+  },
+  "boardId": "69445275492737421858b0ea",
+  "type": "text",
+  "content": "Test Note",
+  "color": "#FCE7F3",
+  "width": 250,
+  "height": 200,
+  "x": 161,
+  "y": 106,
+  "zIndex": 1,
+  "createdAt": {
+    "$date": "2025-12-18T19:13:59.866Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69445287492737421858b0ec"
+  },
+  "boardId": "69445275492737421858b0ea",
+  "type": "plaintext",
+  "content": "Test Text",
+  "color": "transparent",
+  "width": 250,
+  "height": 200,
+  "x": 473,
+  "y": 62,
+  "zIndex": 1,
+  "createdAt": {
+    "$date": "2025-12-18T19:14:15.317Z"
+  }
+}]

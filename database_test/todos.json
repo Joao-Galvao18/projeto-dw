@@ -1,0 +1,12 @@
+[{
+  "_id": {
+    "$oid": "6944529b492737421858b0ed"
+  },
+  "userEmail": "testuser@gmail.com",
+  "content": "Test Note",
+  "isCompleted": false,
+  "order": 0,
+  "createdAt": {
+    "$date": "2025-12-18T19:14:35.926Z"
+  }
+}]
