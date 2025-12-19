@@ -31,7 +31,6 @@ function BoardScreen({ currentUser }) {
             .then(response => response.json())
             .then(fetchedBoards => {
                 setUserBoardsList(fetchedBoards);
-                // Automatically select the first board if available
                 if (fetchedBoards.length > 0) {
                     setActiveBoard(fetchedBoards[0]);
                 }
@@ -72,7 +71,7 @@ function BoardScreen({ currentUser }) {
 
     // REQUEST TO DELETE BOARD
     const handleDeleteBoardRequest = (event, boardIdToDelete) => {
-        event.stopPropagation(); // Prevent tab switching when clicking the delete icon
+        event.stopPropagation();
         setBoardToDelete(boardIdToDelete);
         setIsDeleteModalOpen(true);
         setShowBoardMenu(false);
@@ -87,10 +86,9 @@ function BoardScreen({ currentUser }) {
         const remainingBoards = userBoardsList.filter(board => board._id !== boardToDelete);
         setUserBoardsList(remainingBoards);
 
-        // If we deleted the currently active board, switch to another one
         if (activeBoard && activeBoard._id === boardToDelete) {
             setActiveBoard(remainingBoards.length > 0 ? remainingBoards[0] : null);
-            setBoardNotes([]); // Clear notes
+            setBoardNotes([]);
         }
 
         setIsDeleteModalOpen(false);
@@ -102,22 +100,25 @@ function BoardScreen({ currentUser }) {
     const createNewNote = async (noteType = 'text', noteContent = '') => {
         if (!activeBoard) return;
         
-        // CALCULATE CENTER OF SCREEN BASED ON CURRENT ZOOM/PAN
-        const screenCenterX = 400;
-        const screenCenterY = 300;
+        const canvasContainer = document.querySelector('.board-canvas');
+        const screenCenterX = canvasContainer ? canvasContainer.offsetWidth / 2 : window.innerWidth / 2;
+        const screenCenterY = canvasContainer ? canvasContainer.offsetHeight / 2 : window.innerHeight / 2;
         
         const calculatedX = (-viewportState.xPosition + screenCenterX) / viewportState.zoomLevel; 
         const calculatedY = (-viewportState.yPosition + screenCenterY) / viewportState.zoomLevel;
+
+        const noteWidth = noteType === 'image' ? 300 : 250;
+        const noteHeight = 200;
 
         const newNoteData = {
             boardId: activeBoard._id,
             type: noteType,
             content: noteContent,
             color: noteType === 'text' ? '#FEF3C7' : 'transparent',
-            width: noteType === 'image' ? 300 : 250,
+            width: noteWidth,
             height: noteType === 'text' || noteType === 'plaintext' ? 200 : 'auto',
-            x: calculatedX, 
-            y: calculatedY
+            x: calculatedX - (noteWidth / 2),
+            y: calculatedY - (noteHeight / 2)
         };
 
         const apiResponse = await fetch('/api/notes', {
@@ -139,7 +140,6 @@ function BoardScreen({ currentUser }) {
 
         const fileReader = new FileReader();
         fileReader.onloadend = () => {
-            // Create a new note of type 'image'
             createNewNote('image', fileReader.result);
         };
         fileReader.readAsDataURL(selectedFile);
@@ -150,7 +150,6 @@ function BoardScreen({ currentUser }) {
             currentNotes.map(note => note._id === noteId ? { ...note, ...dataToUpdate } : note)
         );
         
-        // Save to Database
         await fetch(`/api/notes/${noteId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -165,7 +164,6 @@ function BoardScreen({ currentUser }) {
 
     // PANNING LOGIC
     const handlePanStart = (mouseDownEvent) => {
-        // Only start panning if clicking on background (not a note)
         if (mouseDownEvent.target.closest('.sticky-note') || mouseDownEvent.target.closest('.no-drag')) return;
         
         const startMouseX = mouseDownEvent.clientX;
@@ -195,9 +193,8 @@ function BoardScreen({ currentUser }) {
 
     // NOTE DRAGGING LOGIC
     const handleNoteDragStart = (mouseDownEvent, noteId, initialNoteX, initialNoteY) => {
-        mouseDownEvent.stopPropagation(); // Stop background panning
+        mouseDownEvent.stopPropagation();
         
-        // Ignore dragging if clicking text area or resize handle
         if (mouseDownEvent.target.tagName === 'TEXTAREA' || 
             mouseDownEvent.target.closest('.no-drag') || 
             mouseDownEvent.target.classList.contains('resize-handle')) return;
@@ -216,7 +213,7 @@ function BoardScreen({ currentUser }) {
                         ...note, 
                         x: initialNoteX + deltaX, 
                         y: initialNoteY + deltaY, 
-                        zIndex: 100 // Bring to front while dragging
+                        zIndex: 100
                     };
                 }
                 return note;

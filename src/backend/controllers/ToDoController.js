@@ -4,7 +4,6 @@ const { ObjectId } = require('mongodb');
 // GET TASKS FOR USER
 async function getTasks(targetUserEmail) {
     const databaseConnection = getDatabase();
-    // Sort by 'order' (ascending) so the list stays consistent
     return await databaseConnection.collection('todos')
         .find({ userEmail: targetUserEmail })
         .sort({ order: 1 }) 
@@ -42,7 +41,6 @@ async function toggleTask(taskId, isCompleted) {
     return { success: true };
 }
 
-// NEW: REORDER TASKS
 async function reorderTasks(taskIds) {
     const databaseConnection = getDatabase();
     

@@ -4,7 +4,6 @@ function ToDoScreen({ currentUser }) {
     const [tasks, setTasks] = useState([]);
     const [newTaskContent, setNewTaskContent] = useState('');
     
-    // Drag State
     const [draggedItem, setDraggedItem] = useState(null);
 
     // FETCH TASKS

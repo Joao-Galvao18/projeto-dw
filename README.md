@@ -50,7 +50,7 @@ The project includes data files on the folder `database_test`. To import this in
 3.  The server will run at `http://localhost:8000`.
 
 
-## 2. Student Contributors
+## 4. Student Contributors
 
 João Galvão - 2022214628:
 
