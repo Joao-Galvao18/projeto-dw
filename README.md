@@ -1,5 +1,8 @@
 # Project Name: Organizer App (Group 02)
 
+## Details
+The passwords for the server and the database are the same which is the one attribute by the teacher for our group (group 02)
+
 ![App Screenshot](./screenshots/login.png)
 ![App Screenshot](./screenshots/board.png)
 ![App Screenshot](./screenshots/todo.png)
