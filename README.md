@@ -28,7 +28,7 @@ The Electron app is configured to automatically connect to our live university s
 
 ### Troubleshooting: Connection Issues
 
-If the Electron App or Browser cannot connect to the server (Timeout or Connection Refused) or it works but the "testuser@gmail.com" isnt found as a real user, you´re not connected yet to the server due to University Network restrictions, please use an **SSH Tunnel**.
+If the Electron App or Browser cannot connect to the server (Timeout or Connection Refused) or it works but the "testuser@gmail.com" (password: test) isnt found as a real user, you´re not connected yet to the server due to University Network restrictions, please use an **SSH Tunnel**.
 
 1.  Open a second terminal and run this command: [ssh -L 8000:127.0.0.1:8000 admin@10.17.0.22].
 2.  Keep that terminal open.
