@@ -20,7 +20,7 @@ const {
 const { getTasks, createTask, toggleTask, reorderTasks, deleteTask } = require('./controllers/ToDoController');
 const { updateUserTheme } = require('./controllers/SettingsController');
 
-const SERVER_PORT = 3001;
+const SERVER_PORT = 8080;
 const FRONTEND_DIRECTORY_PATH = path.join(__dirname, '../frontend');
 
 const mimeTypes = {
