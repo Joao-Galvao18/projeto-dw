@@ -18,7 +18,7 @@ function LinkScreen({ currentUser }) {
     //FETCH LINKS FOR USER ON LOAD
     useEffect(() => {
         if (!currentUser) return;
-        fetch('http://localhost:8000/api/links', { headers: { 'user-email': currentUser.email } })
+        fetch('/api/links', { headers: { 'user-email': currentUser.email } })
             .then(res => res.json())
             .then(data => setLinks(data))
             .catch(err => console.error("Error loading links:", err));
@@ -34,7 +34,7 @@ function LinkScreen({ currentUser }) {
 
         try {
             //SEND POST REQUEST
-            const response = await fetch('http://localhost:8000/api/links', {
+            const response = await fetch('/api/links', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -71,7 +71,7 @@ function LinkScreen({ currentUser }) {
 
         try {
             //SEND DELETE REQUEST
-            await fetch(`http://localhost:8000/api/links/${linkToDelete}`, { method: 'DELETE' });
+            await fetch(`/api/links/${linkToDelete}`, { method: 'DELETE' });
             
             //UPDATE LOCAL STATE
             setLinks(links.filter(link => link._id !== linkToDelete));

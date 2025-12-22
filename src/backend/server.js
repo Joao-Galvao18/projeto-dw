@@ -264,8 +264,8 @@ const server = http.createServer(async (incomingRequest, serverResponse) => {
 async function startServer() {
     try {
         await connectToDatabase();
-        server.listen(SERVER_PORT, () => {
-            console.log(`Online at http://localhost:${SERVER_PORT}`);
+        server.listen(SERVER_PORT, "0.0.0.0", () => {
+            console.log(`Online at http://'0.0.0.0':${SERVER_PORT}`);
         });
     } catch (error) {
         console.error('Critical Error:', error);
