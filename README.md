@@ -23,8 +23,9 @@ The Electron app is configured to automatically connect to our live university s
 
 ### Instructions
 1.  Open a terminal in the project folder.
-2.  Install dependencies (if first time): [npm install]
-3.  Start the application: [npm start]
+2.  Check main.js line 22 and make sure the localhost url is the one commented
+3.  Install dependencies (if first time): [npm install]
+4.  Start the application: [npm start]
 
 ## 3. How to run the server locally
 
@@ -39,7 +40,7 @@ The project includes data files on the folder `database_test`. To import this in
 
 ### Start the Node Server
 1.  Navigate to the project folder.
-2.  Check main.js line 22 and check if the localhost url is the one not commented
+2.  Check main.js line 24 and make sure the server url is the one commented
 3.  Start the backend: [node src/backend/server.js]
 4.  The server will run at `http://localhost:8080`.
 
