@@ -26,16 +26,6 @@ The Electron app is configured to automatically connect to our live university s
 2.  Install dependencies (if first time): [npm install]
 3.  Start the application: [npm start]
 
-### Troubleshooting: Connection Issues
-
-If the Electron App or Browser cannot connect to the server (Timeout or Connection Refused) or it works but the "testuser@gmail.com" (password: test) isnt found as a real user, you´re not connected yet to the server due to University Network restrictions, please use an **SSH Tunnel**.
-
-1.  Open a second terminal and run this command: [ssh -L 8000:127.0.0.1:8000 admin@10.17.0.22].
-2.  Keep that terminal open.
-3.  The app will now be able to connect via the tunnel.
-4.  Back in the first terminal, start the application again: [npm start].
-
-
 ## 3. How to run the server locally
 
 ### Prerequisites
@@ -49,8 +39,9 @@ The project includes data files on the folder `database_test`. To import this in
 
 ### Start the Node Server
 1.  Navigate to the project folder.
-2.  Start the backend: [node src/backend/server.js]
-3.  The server will run at `http://localhost:8000`.
+2.  Check main.js line 22 and check if the localhost url is the one not commented
+3.  Start the backend: [node src/backend/server.js]
+4.  The server will run at `http://localhost:8080`.
 
 
 ## 4. Student Contributors

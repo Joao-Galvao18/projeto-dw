@@ -19,7 +19,11 @@ function createMainWindow() {
         }
     });
 
-    const url = 'http://10.17.0.22:8080';
+//MODO LOCAL
+const url = 'http://localhost:8080';
+
+//MODO SERVER
+// const url = 'http://10.17.0.22:8080';
 
     const loadContent = () => {
         mainWindow.loadURL(url).catch((err) => {
